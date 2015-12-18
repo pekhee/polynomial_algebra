@@ -1,5 +1,5 @@
-5th Degree Polynomial Processor
-===============================
+Polynomial Processor
+====================
 
 ## Compilation
 
