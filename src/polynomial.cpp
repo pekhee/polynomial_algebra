@@ -1,4 +1,5 @@
 #include "polynomial.h"
+#include <iostream>
 
 Polynomial::Polynomial(std::vector<int> _coefficients) {
     coefficients = _coefficients;
@@ -15,29 +16,24 @@ std::string Polynomial::toString() {
 }
 
 std::vector<int> zip_and_map(std::vector<int> fv, std::vector<int> sv, int (*mapper)(int, int)) {
-    int fflag = 0;
-    int sflag = 0;
+    std::size_t biggest_size = fv.size() > sv.size() ? fv.size() : sv.size();
     std::vector<int> results;
 
-    std::vector<int>::iterator fvit = fv.begin();
-    std::vector<int>::iterator svit = sv.begin();
-    while(fvit != fv.end() && svit != sv.end()) {
-        int fit = fflag ? 0 : *fvit;
-        int sit = sflag ? 0 : *svit;
+    for(std::size_t i = 0; i < biggest_size; i++) {
+        int fit, sit;
+        if(i + 1 > fv.size()) {
+            fit = 0;
+        } else {
+            fit = fv[i];
+        }
+
+        if(i + 1 > sv.size()) {
+            sit = 0;
+        } else {
+            sit = sv[i];
+        }
 
         results.push_back(mapper(fit, sit));
-
-        if(fvit == fv.end()) {
-            fflag = 1;
-        } else {
-            ++fvit;
-        }
-
-        if(svit == sv.end()) {
-            sflag = 1;
-        } else {
-            ++svit;
-        }
     }
 
     return results;
